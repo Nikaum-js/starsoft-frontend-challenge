@@ -14,7 +14,7 @@ export function Product({ image, description, price, name }: ProductProps) {
   return (
     <div className={styles.product}>
       <div className={styles.containerImage}>
-        <Image src={image} alt="" width={296} height={258} draggable="false" />
+        <Image src={image} alt="" width={296} height={258} priority draggable="false" />
       </div>
 
       <div className={styles.productInfo}>

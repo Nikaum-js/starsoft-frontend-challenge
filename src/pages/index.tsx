@@ -1,78 +1,45 @@
+import { GetServerSideProps } from 'next';
 import { Header } from "@/components/Header";
 import { Product } from "@/components/Product";
+import useProducts from '../hooks/useProducts';
+import styles from './Home.module.scss';
+import axios from 'axios';
 
-import styles from './Home.module.scss'
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { data } = await axios.get('https://starsoft-challenge-7dfd4a56a575.herokuapp.com/v1/products?page=1&limit=20');
+  return {
+    props: {
+      initialProducts: data.data,
+    },
+  };
+};
 
-export default function Home() {
+const Home = ({ initialProducts }: { initialProducts: any }) => {
+  const { data: products, isLoading, error } = useProducts(initialProducts);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading products</div>;
+
+  console.log(products);
+
   return (
     <div className={styles.container}>
       <Header />
 
       <div className={styles.content}>
-        <Product 
-          id={1}
-          image="https://softstar.s3.amazonaws.com/items/backpack.png"
-          name="Backpack"
-          description="Uma mochila resistente com compartimentos secretos, ideal para aventureiros que precisam carregar uma variedade de itens essenciais em suas jornadas épicas."
-          price={182}
-        />
-
-        <Product 
-          id={1}
-          image="https://softstar.s3.amazonaws.com/items/backpack.png"
-          name="Backpack"
-          description="Uma mochila resistente com compartimentos secretos, ideal para aventureiros que precisam carregar uma variedade de itens essenciais em suas jornadas épicas."
-          price={182}
-        />
-
-        <Product 
-          id={1}
-          image="https://softstar.s3.amazonaws.com/items/backpack.png"
-          name="Backpack"
-          description="Uma mochila resistente com compartimentos secretos, ideal para aventureiros que precisam carregar uma variedade de itens essenciais em suas jornadas épicas."
-          price={182}
-        />
-
-        <Product 
-          id={1}
-          image="https://softstar.s3.amazonaws.com/items/backpack.png"
-          name="Backpack"
-          description="Uma mochila resistente com compartimentos secretos, ideal para aventureiros que precisam carregar uma variedade de itens essenciais em suas jornadas épicas."
-          price={182}
-        />
-
-        <Product 
-          id={1}
-          image="https://softstar.s3.amazonaws.com/items/backpack.png"
-          name="Backpack"
-          description="Uma mochila resistente com compartimentos secretos, ideal para aventureiros que precisam carregar uma variedade de itens essenciais em suas jornadas épicas."
-          price={182}
-        />
-        
-        <Product 
-          id={1}
-          image="https://softstar.s3.amazonaws.com/items/backpack.png"
-          name="Backpack"
-          description="Uma mochila resistente com compartimentos secretos, ideal para aventureiros que precisam carregar uma variedade de itens essenciais em suas jornadas épicas."
-          price={182}
-        />
-
-        <Product 
-          id={1}
-          image="https://softstar.s3.amazonaws.com/items/backpack.png"
-          name="Backpack"
-          description="Uma mochila resistente com compartimentos secretos, ideal para aventureiros que precisam carregar uma variedade de itens essenciais em suas jornadas épicas."
-          price={182}
-        />
-
-        <Product 
-          id={1}
-          image="https://softstar.s3.amazonaws.com/items/backpack.png"
-          name="Backpack"
-          description="Uma mochila resistente com compartimentos secretos, ideal para aventureiros que precisam carregar uma variedade de itens essenciais em suas jornadas épicas."
-          price={182}
-        />
+        {Array.isArray(products) && products.map((product: any) => (
+          <Product
+            key={product.id}
+            id={product.id}
+            image={product.image}
+            name={product.name}
+            description={product.description}
+            price={product.price}
+          />
+        ))}
       </div>
     </div>
   );
-}
+};
+
+export default Home;
