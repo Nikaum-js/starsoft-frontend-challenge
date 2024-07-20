@@ -1,6 +1,8 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { useState, useEffect } from 'react';
 import { Header } from "@/components/Header";
 import { Product as ProductComponent } from "@/components/Product";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 import styles from './Home.module.scss';
 import { Product, ProductsResponse } from '@/types/product';
 import { useProducts } from '@/hooks/useProducts';
@@ -8,20 +10,35 @@ import { AxiosResponse } from 'axios';
 import { api } from '@/lib/axios';
 import { Button } from '@/components/Button';
 
-export default function Home({ initialProducts }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { data: products, isLoading, error } = useProducts(initialProducts);
+const initialLimit = 12;
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading products</div>;
+export default function Home({ initialProducts, initialDataUpdatedAt }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const [page, setPage] = useState(1);
+  const [allProducts, setAllProducts] = useState<Product[]>(initialProducts);
+  const [hasNextPage, setHasNextPage] = useState(true);
 
-  console.log(products);
+  const { data: productsData, isLoading, error } = useProducts(page, initialLimit, initialProducts, initialDataUpdatedAt);
+
+  useEffect(() => {
+    if (page === 1) return;
+    if (productsData) {
+      setAllProducts(prevProducts => [...prevProducts, ...productsData.data]);
+      setHasNextPage(productsData.metadata.hasNextPage);
+    }
+  }, [productsData, page]);
+
+  const handleLoadMore = () => {
+    if (hasNextPage) {
+      setPage(prevPage => prevPage + 1);
+    }
+  };
 
   return (
     <div className={styles.container}>
       <Header />
 
       <div className={styles.content}>
-        {Array.isArray(products) && products.map((product: Product) => (
+        {Array.isArray(allProducts) && allProducts.map((product: Product) => (
           <ProductComponent
             key={product.id}
             id={product.id}
@@ -33,22 +50,29 @@ export default function Home({ initialProducts }: InferGetServerSidePropsType<ty
         ))}
       </div>
 
-      <div className={styles.buttonMoreItems}>
-        <Button variant='secondary'>
-          Carregar mais
-        </Button>
-      </div>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        hasNextPage && (
+          <div className={styles.buttonMoreItems}>
+            <Button variant='secondary' onClick={handleLoadMore}>
+              Carregar mais
+            </Button>
+          </div>
+        )
+      )}
 
-      <strong>STARSOFT © TODOS OS DIREITOS RESERVADOS</strong>
+      <span>STARSOFT © TODOS OS DIREITOS RESERVADOS</span>
     </div>
   );
-};
+}
 
-export const getServerSideProps: GetServerSideProps<{ initialProducts: Product[] }> = async () => {
-  const { data }: AxiosResponse<ProductsResponse> = await api.get('/products?page=1&limit=20');
+export const getServerSideProps: GetServerSideProps<{ initialProducts: Product[], initialDataUpdatedAt: number }> = async () => {
+  const { data }: AxiosResponse<ProductsResponse> = await api.get('/products?page=1&limit=12');
   return {
     props: {
       initialProducts: data.data,
+      initialDataUpdatedAt: Date.now(),
     },
   };
 };
