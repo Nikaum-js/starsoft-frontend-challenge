@@ -19,8 +19,10 @@ export function Product({ image, description, price, name }: ProductProps) {
       </div>
 
       <div className={styles.productInfo}>
-        <h2>{name}</h2>
-        <p>{description}</p>
+        <div>
+          <h2>{name}</h2>
+          <p>{description}</p>
+        </div>
 
         <div className={styles.price}>
           <Image src="/eth.svg" alt="ethereum cryptocurrency logo" width={29} height={29} draggable="false" />
