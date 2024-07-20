@@ -1,0 +1,16 @@
+@import '../../styles/variables.scss';
+
+.progressBarContainer {
+  width: 100%;
+  height: 10px;
+  background: $gray-400;
+  border-radius: 4px;
+  position: relative;
+  margin: 8px 0;
+}
+
+.progressBar {
+  height: 100%;
+  background: $primary;
+  border-radius: 4px;
+}

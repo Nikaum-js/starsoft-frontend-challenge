@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Header } from "@/components/Header";
 import { Product as ProductComponent } from "@/components/Product";
 import { SkeletonProduct } from "@/components/SkeletonProduct";
+import { ProgressBar } from "@/components/ProgressBar";
 import styles from './Home.module.scss';
 import { Product, ProductsResponse } from '@/types/product';
 import { useProducts } from '@/hooks/useProducts';
@@ -16,6 +17,7 @@ export default function Home({ initialProducts, initialDataUpdatedAt }: InferGet
   const [page, setPage] = useState(1);
   const [allProducts, setAllProducts] = useState<Product[]>(initialProducts);
   const [hasNextPage, setHasNextPage] = useState(true);
+  const [totalProducts, setTotalProducts] = useState(0);
   const [loadingMore, setLoadingMore] = useState(false);
 
   const { data: productsData, isLoading, error } = useProducts(page, initialLimit, initialProducts, initialDataUpdatedAt);
@@ -29,6 +31,7 @@ export default function Home({ initialProducts, initialDataUpdatedAt }: InferGet
       setAllProducts(prevProducts => [...prevProducts, ...productsData.data]);
     }
     setHasNextPage(productsData.metadata.hasNextPage);
+    setTotalProducts(productsData.metadata.count);
     setLoadingMore(false);
   }, [productsData, page]);
 
@@ -62,13 +65,15 @@ export default function Home({ initialProducts, initialDataUpdatedAt }: InferGet
           ))}
       </div>
 
-      {!isLoading && hasNextPage && !loadingMore && (
-        <div className={styles.buttonMoreItems}>
-          <Button variant='secondary' onClick={handleLoadMore}>
-            Carregar mais
+      <div className={styles.buttonMoreItemsContainer}>
+        <div className={styles.buttonMoreItemsContent}>
+          <ProgressBar loaded={allProducts.length} total={totalProducts} />
+          
+          <Button variant='secondary' onClick={handleLoadMore} disabled={!hasNextPage}>
+            {hasNextPage ? 'Carregar mais' : 'Você já viu tudo'}
           </Button>
         </div>
-      )}
+      </div>
 
       <span>STARSOFT © TODOS OS DIREITOS RESERVADOS</span>
     </div>

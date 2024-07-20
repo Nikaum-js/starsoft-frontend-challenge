@@ -1,8 +1,9 @@
 @import '../styles/variables.scss';
 
 .container {
-  .buttonMoreItems {
+  .buttonMoreItemsContainer {
     display: flex;
+    align-items: center;
     justify-content: center;
   }
 

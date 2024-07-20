@@ -6,8 +6,6 @@ import { AxiosResponse } from 'axios';
 const fetchProducts = async ({ queryKey }: QueryFunctionContext): Promise<ProductsResponse> => {
   const [_key, page, limit] = queryKey;
 
-  await new Promise(resolve => setTimeout(resolve, 2000));
-
   const { data }: AxiosResponse<ProductsResponse> = await api.get(`/products?page=${page}&limit=${limit}`);
   return data;
 };
