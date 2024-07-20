@@ -2,7 +2,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useState, useEffect } from 'react';
 import { Header } from "@/components/Header";
 import { Product as ProductComponent } from "@/components/Product";
-import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { SkeletonProduct } from "@/components/SkeletonProduct";
 import styles from './Home.module.scss';
 import { Product, ProductsResponse } from '@/types/product';
 import { useProducts } from '@/hooks/useProducts';
@@ -16,20 +16,26 @@ export default function Home({ initialProducts, initialDataUpdatedAt }: InferGet
   const [page, setPage] = useState(1);
   const [allProducts, setAllProducts] = useState<Product[]>(initialProducts);
   const [hasNextPage, setHasNextPage] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const { data: productsData, isLoading, error } = useProducts(page, initialLimit, initialProducts, initialDataUpdatedAt);
 
   useEffect(() => {
-    if (page === 1) return;
-    if (productsData) {
+    if (!productsData) return;
+
+    if (page === 1) {
+      setAllProducts(productsData.data);
+    } else {
       setAllProducts(prevProducts => [...prevProducts, ...productsData.data]);
-      setHasNextPage(productsData.metadata.hasNextPage);
     }
+    setHasNextPage(productsData.metadata.hasNextPage);
+    setLoadingMore(false);
   }, [productsData, page]);
 
   const handleLoadMore = () => {
     if (hasNextPage) {
       setPage(prevPage => prevPage + 1);
+      setLoadingMore(true);
     }
   };
 
@@ -38,28 +44,30 @@ export default function Home({ initialProducts, initialDataUpdatedAt }: InferGet
       <Header />
 
       <div className={styles.content}>
-        {Array.isArray(allProducts) && allProducts.map((product: Product) => (
-          <ProductComponent
-            key={product.id}
-            id={product.id}
-            image={product.image}
-            name={product.name}
-            description={product.description}
-            price={product.price}
-          />
-        ))}
+        {isLoading && page === 1
+          ? Array.from({ length: initialLimit }).map((_, index) => <SkeletonProduct key={index} />)
+          : allProducts.map((product: Product) => (
+              <ProductComponent
+                key={product.id}
+                id={product.id}
+                image={product.image}
+                name={product.name}
+                description={product.description}
+                price={product.price}
+              />
+            ))}
+        {loadingMore &&
+          Array.from({ length: initialLimit }).map((_, index) => (
+            <SkeletonProduct key={`loading-${index}`} />
+          ))}
       </div>
 
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        hasNextPage && (
-          <div className={styles.buttonMoreItems}>
-            <Button variant='secondary' onClick={handleLoadMore}>
-              Carregar mais
-            </Button>
-          </div>
-        )
+      {!isLoading && hasNextPage && !loadingMore && (
+        <div className={styles.buttonMoreItems}>
+          <Button variant='secondary' onClick={handleLoadMore}>
+            Carregar mais
+          </Button>
+        </div>
       )}
 
       <span>STARSOFT © TODOS OS DIREITOS RESERVADOS</span>

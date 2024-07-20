@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import styles from './LoadingSpinner.module.scss';
 
-export const LoadingSpinner = () => {
+export function LoadingSpinner() {
   return (
     <motion.div
       className={styles.spinner}

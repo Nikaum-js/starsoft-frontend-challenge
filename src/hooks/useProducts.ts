@@ -5,6 +5,9 @@ import { AxiosResponse } from 'axios';
 
 const fetchProducts = async ({ queryKey }: QueryFunctionContext): Promise<ProductsResponse> => {
   const [_key, page, limit] = queryKey;
+
+  await new Promise(resolve => setTimeout(resolve, 2000));
+
   const { data }: AxiosResponse<ProductsResponse> = await api.get(`/products?page=${page}&limit=${limit}`);
   return data;
 };
@@ -14,7 +17,7 @@ export const useProducts = (page: number, limit: number, initialData: Product[],
     queryKey: ['products', page, limit],
     queryFn: fetchProducts,
     initialData: page === 1 ? { data: initialData, metadata: { page: 1, limit, count: initialData.length, pageCount: Math.ceil(initialData.length / limit), hasNextPage: initialData.length >= limit, hasPreviousPage: false } } : undefined,
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    // staleTime: 1000 * 60 * 5, // 5 minutes
     initialDataUpdatedAt,
   };
   return useQuery(options);
