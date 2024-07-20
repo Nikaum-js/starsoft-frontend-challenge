@@ -1,15 +1,13 @@
 import Image from 'next/image';
 import styles from './Header.module.scss';
+import { ShoppingCart } from '../ShoppingCart';
 
 export function Header() {
   return (
     <header className={styles.header}>
-      <Image src="/logo.svg" alt="start soft logo" width={101} height={38} />
+      <Image src="/logo.svg" alt="start soft logo" width={101} height={38} draggable="false" />
 
-      <div className={styles.shoppingCart}>
-        <Image src="/bar.svg" alt="shopping cart icon" width={33} height={33} />
-        <p>1</p>
-      </div>
+      <ShoppingCart itemsInCart={1} />
     </header>
   );
 }

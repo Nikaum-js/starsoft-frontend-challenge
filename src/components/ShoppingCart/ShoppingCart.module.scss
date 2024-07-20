@@ -1,0 +1,19 @@
+@import '../../styles/variables.scss';
+
+.shoppingCart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+  border: 0;
+
+  cursor: pointer;
+  gap: 10px;
+
+  p {
+    font-family: $font-secondary;
+    font-size: $font-size-xl;
+    color: $white;
+  }
+}
