@@ -1,0 +1,42 @@
+$primary: #FF8310;
+$gray-700: #191A20;
+$gray-600: #232323;
+$gray-400: #393939;
+$gray-200: #CCCCCC;
+$white: #FFFFFF;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1080px) {
+  html {
+    font-size: 93.75%;
+  }
+}
+
+@media (max-width: 720px) {
+  html {
+    font-size: 87.5%;
+  }
+}
+
+body { 
+  background: $gray-600;
+  color: #FFFFFF;
+}
+
+body, input, textarea, select, button {
+  font: 400 1rem "Poppins", sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
