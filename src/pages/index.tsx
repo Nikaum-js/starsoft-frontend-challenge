@@ -1,20 +1,13 @@
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { Header } from "@/components/Header";
-import { Product } from "@/components/Product";
-import useProducts from '../hooks/useProducts';
+import { Product as ProductComponent } from "@/components/Product";
 import styles from './Home.module.scss';
-import axios from 'axios';
+import { Product, ProductsResponse } from '@/types/product';
+import { useProducts } from '@/hooks/useProducts';
+import { AxiosResponse } from 'axios';
+import { api } from '@/lib/axios';
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await axios.get('https://starsoft-challenge-7dfd4a56a575.herokuapp.com/v1/products?page=1&limit=20');
-  return {
-    props: {
-      initialProducts: data.data,
-    },
-  };
-};
-
-const Home = ({ initialProducts }: { initialProducts: any }) => {
+export default function Home({ initialProducts }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { data: products, isLoading, error } = useProducts(initialProducts);
 
   if (isLoading) return <div>Loading...</div>;
@@ -27,8 +20,8 @@ const Home = ({ initialProducts }: { initialProducts: any }) => {
       <Header />
 
       <div className={styles.content}>
-        {Array.isArray(products) && products.map((product: any) => (
-          <Product
+        {Array.isArray(products) && products.map((product: Product) => (
+          <ProductComponent
             key={product.id}
             id={product.id}
             image={product.image}
@@ -42,4 +35,11 @@ const Home = ({ initialProducts }: { initialProducts: any }) => {
   );
 };
 
-export default Home;
+export const getServerSideProps: GetServerSideProps<{ initialProducts: Product[] }> = async () => {
+  const { data }: AxiosResponse<ProductsResponse> = await api.get('/products?page=1&limit=20');
+  return {
+    props: {
+      initialProducts: data.data,
+    },
+  };
+};

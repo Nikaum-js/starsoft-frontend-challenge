@@ -2,7 +2,14 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['softstar.s3.amazonaws.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'softstar.s3.amazonaws.com',
+        port: '',
+        pathname: '/items/**',
+      },
+    ],
   },
   async rewrites() {
     return [
