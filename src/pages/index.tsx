@@ -6,6 +6,7 @@ import { Product, ProductsResponse } from '@/types/product';
 import { useProducts } from '@/hooks/useProducts';
 import { AxiosResponse } from 'axios';
 import { api } from '@/lib/axios';
+import { Button } from '@/components/Button';
 
 export default function Home({ initialProducts }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { data: products, isLoading, error } = useProducts(initialProducts);
@@ -31,6 +32,14 @@ export default function Home({ initialProducts }: InferGetServerSidePropsType<ty
           />
         ))}
       </div>
+
+      <div className={styles.buttonMoreItems}>
+        <Button variant='secondary'>
+          Carregar mais
+        </Button>
+      </div>
+
+      <strong>STARSOFT © TODOS OS DIREITOS RESERVADOS</strong>
     </div>
   );
 };

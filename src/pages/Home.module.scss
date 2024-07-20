@@ -1,5 +1,24 @@
+@import '../styles/variables.scss';
 
 .container {
+
+  .buttonMoreItems {
+    display: flex;
+    justify-content: center;
+
+    margin: 64px 0;
+  }
+
+  strong {
+    display: flex;
+    justify-content: center;
+
+    margin-bottom: 16px;
+
+    font-size: $font-size-sm;
+    color: hsla(0, 0%, 100%, 0.44);
+    font-weight: 400;
+  }
 
   .content {
     display: grid;

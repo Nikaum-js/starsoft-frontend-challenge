@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import styles from './Product.module.scss';
+import { Button } from "../Button";
 
 interface ProductProps {
   id: number
@@ -28,9 +29,9 @@ export function Product({ image, description, price, name }: ProductProps) {
         </div>
       </div>
 
-      <button>
+      <Button>
         Comprar
-      </button>
+      </Button>
     </div>
   );
 }
