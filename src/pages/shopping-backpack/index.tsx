@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { toast } from 'react-toastify';
 import styles from './ShoppingBackpack.module.scss';
 import { Button } from '@/components/Button';
 import { useRouter } from 'next/router';
@@ -27,6 +28,15 @@ export default function ShoppingBackpack() {
 
   const handleRemove = (id: number) => {
     dispatch(removeItemFromBackpack(id));
+    toast.success('Item removido com sucesso');
+  };
+
+  const handleCheckout = () => {
+    if (backpackItems.length === 0) {
+      toast.error('Você não tem itens no carrinho');
+      return;
+    }
+    toast.success('Compra finalizada com sucesso');
   };
 
   const total = backpackItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -46,19 +56,21 @@ export default function ShoppingBackpack() {
       </div>
 
       <div className={styles.content}>
-        {backpackItems.map((item) => (
-          <ShoppingBackpackItem
-            key={item.id}
-            imageSrc={item.image}
-            name={item.name}
-            description={item.description}
-            price={item.price}
-            quantity={item.quantity}
-            onIncrement={() => handleIncrement(item.id)}
-            onDecrement={() => handleDecrement(item.id)}
-            onRemove={() => handleRemove(item.id)}
-          />
-        ))}
+        <AnimatePresence>
+          {backpackItems.map((item) => (
+            <ShoppingBackpackItem
+              key={item.id}
+              imageSrc={item.image}
+              name={item.name}
+              description={item.description}
+              price={item.price}
+              quantity={item.quantity}
+              onIncrement={() => handleIncrement(item.id)}
+              onDecrement={() => handleDecrement(item.id)}
+              onRemove={() => handleRemove(item.id)}
+            />
+          ))}
+        </AnimatePresence>
 
         <div className={styles.total}>
           <strong>TOTAL</strong>
@@ -69,7 +81,7 @@ export default function ShoppingBackpack() {
           </div>
         </div>
 
-        <Button id={styles.checkoutButton}>
+        <Button id={styles.checkoutButton} onClick={handleCheckout}>
           FINALIZAR COMPRA
         </Button>
       </div>

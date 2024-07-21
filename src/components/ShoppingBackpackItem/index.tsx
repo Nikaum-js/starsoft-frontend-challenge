@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Minus, Plus } from 'lucide-react';
 import styles from './ShoppingBackpackItem.module.scss';
+import { Minus, Plus } from 'lucide-react';
 
 interface ShoppingBackpackItemProps {
   imageSrc: string;
@@ -14,18 +14,34 @@ interface ShoppingBackpackItemProps {
   onRemove: () => void;
 }
 
-export function ShoppingBackpackItem({ imageSrc, name, description, price, quantity, onIncrement, onDecrement, onRemove }: ShoppingBackpackItemProps) {
+export function ShoppingBackpackItem({
+  imageSrc,
+  name,
+  description,
+  price,
+  quantity,
+  onIncrement,
+  onDecrement,
+  onRemove,
+}: ShoppingBackpackItemProps) {
   return (
-    <div className={styles.backpackItem}>
+    <motion.div
+      className={styles.backpackItem}
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0, transition: { duration: 0.5 } }}
+    >
       <Image src={imageSrc} alt={name} width={161} height={161} />
 
       <div className={styles.backpackItemInfos}>
         <h3>{name}</h3>
+
         <p>{description}</p>
+
         <div className={styles.price}>
           <Image src="/eth.svg" alt="ethereum cryptocurrency logo" width={29} height={29} draggable="false" />
           <strong>{price} ETH</strong>
         </div>
+
         <div className={styles.backpackItemActions}>
           <div className={styles.counter}>
             <div>
@@ -38,6 +54,7 @@ export function ShoppingBackpackItem({ imageSrc, name, description, price, quant
               </button>
             </div>
           </div>
+
           <motion.button
             className={styles.backpackItemRemove}
             whileHover={{ scale: 1.05 }}
@@ -48,6 +65,6 @@ export function ShoppingBackpackItem({ imageSrc, name, description, price, quant
           </motion.button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
