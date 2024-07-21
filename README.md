@@ -8,6 +8,7 @@ Este repositório contém o código para o desafio de frontend da Starsoft. A ap
 - [Instalação](#instalação)
 - [Scripts Disponíveis](#scripts-disponíveis)
 - [Docker](#docker)
+- [Testes](#testes)
 - [Deploy](#deploy)
 
 ## Pré-requisitos
@@ -89,6 +90,26 @@ Também é possível rodar a aplicação utilizando Docker. Certifique-se de ter
 2. **Acesse a aplicação:**
 
    Abra [http://localhost:3001](http://localhost:3001) para ver no navegador.
+
+## Testes
+
+O projeto utiliza Cypress para testes end-to-end.
+
+### Executar Cypress em modo interativo
+
+Para abrir a interface do Cypress e executar os testes em modo interativo, utilize o comando:
+
+```bash
+yarn cypress open
+```
+
+### Executar Cypress em modo headless
+
+Para executar os testes do Cypress em modo headless (linha de comando), utilize o comando:
+
+```bash
+yarn cypress run
+```
 
 ## Deploy
 
