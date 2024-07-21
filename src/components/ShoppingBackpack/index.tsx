@@ -16,7 +16,7 @@ export function ShoppingBackpack({ itemsInBackpack }: ShoppingBackpackProps) {
   return (
     <button className={styles.shoppingBackpack} onClick={handleRedirectToShoppingBackpack}>
       <Image src="/bar.svg" alt="shopping Backpack icon" width={33} height={33} />
-      <p>{itemsInBackpack}</p>
+      <p data-cy="cart-count">{itemsInBackpack}</p>
     </button>
   );
 }

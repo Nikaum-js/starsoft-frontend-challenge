@@ -47,7 +47,7 @@ export function Product({ id, image, description, price, name }: ProductProps) {
         </div>
       </div>
 
-      <Button onClick={handleAddToCart}>
+      <Button onClick={handleAddToCart} data-cy="add-to-cart">
         Comprar
       </Button>
     </motion.div>

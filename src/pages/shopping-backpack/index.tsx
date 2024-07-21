@@ -57,7 +57,7 @@ export default function ShoppingBackpack() {
 
       <div className={styles.content}>
         <AnimatePresence>
-          {backpackItems.map((item) => (
+          {backpackItems.map((item: any) => (
             <ShoppingBackpackItem
               key={item.id}
               imageSrc={item.image}
@@ -81,7 +81,7 @@ export default function ShoppingBackpack() {
           </div>
         </div>
 
-        <Button id={styles.checkoutButton} onClick={handleCheckout}>
+        <Button id={styles.checkoutButton} onClick={handleCheckout} data-cy="checkout">
           FINALIZAR COMPRA
         </Button>
       </div>

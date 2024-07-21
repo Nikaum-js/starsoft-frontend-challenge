@@ -27,6 +27,7 @@ export function ShoppingBackpackItem({
   return (
     <motion.div
       className={styles.backpackItem}
+      data-cy="cart-item"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.5 } }}
     >
@@ -45,11 +46,11 @@ export function ShoppingBackpackItem({
         <div className={styles.backpackItemActions}>
           <div className={styles.counter}>
             <div>
-              <button onClick={onDecrement}>
+              <button onClick={onDecrement} data-cy="decrement-quantity">
                 <Minus />
               </button>
-              <span>{quantity}</span>
-              <button onClick={onIncrement}>
+              <span data-cy="item-quantity">{quantity}</span>
+              <button onClick={onIncrement} data-cy="increment-quantity">
                 <Plus />
               </button>
             </div>
@@ -60,6 +61,7 @@ export function ShoppingBackpackItem({
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={onRemove}
+            data-cy="remove-item"
           >
             <Image src="/trash.svg" alt="trash button icon" width={25} height={25} />
           </motion.button>
