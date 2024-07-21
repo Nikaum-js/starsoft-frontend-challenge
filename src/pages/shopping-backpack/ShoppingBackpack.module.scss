@@ -1,0 +1,176 @@
+@import '../../styles/variables.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .header {
+    display: flex;
+    align-items: center;
+
+    min-width: 45rem;
+    margin-top: 4.625rem;
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      height: 3.75rem;
+      width: 3.75rem;
+
+      background: $gray-300;
+      border: 0;
+      border-radius: 50%;
+
+      margin-right: 5.25rem;
+    }
+
+    h2 {
+      font-size: $font-size-2xl;
+      font-weight: 500;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    
+    min-width: 45rem;
+    margin-top: 96px;
+    gap: 27px;
+
+    .price {
+      display: flex;
+      align-items: center;
+
+      margin: 8px 0;
+
+      img {
+        margin-right: 0.625rem;
+      }
+
+      strong {
+        font-size: $font-size-xl;
+        color: $gray-100;
+        line-height: 1.375rem;
+        font-weight: 600;
+      }
+    }
+
+    .backpackItem {
+      display: flex;
+      align-items: center;
+
+      background-color: $gray-250;
+      border-radius: 8px;
+
+      padding: 1.2188rem 1.875rem;
+
+
+      img {
+        border-radius: 8px;
+      }
+
+      .backpackItemInfos {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        
+        gap: 10px;
+        margin: 0 30px;
+
+        width: 100%;
+        height: 100%;
+
+        h3 {
+          font-size: $font-size-lg;
+          font-weight: 500;
+        }
+
+        p {
+          text-align: justify;
+          font-size: $font-size-xs;
+          line-height: 0.9375rem;
+          font-weight: 300;
+          color: $gray-200;
+
+          width: 440px;
+        }
+
+        .backpackItemActions {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .counter {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: $gray-600;
+            border-radius: 8px;
+
+            div {
+              display: flex;
+              padding: 0.9063rem 0.5rem;
+
+              span {
+                font-size: $font-size-sm;
+                line-height: 1.25rem;
+                font-weight: 600;
+
+                margin: 0 30px;
+
+                cursor: default;
+              }
+            }
+
+            button {
+              display: flex;
+              align-items: center;
+
+              border: 0;
+              background-color: transparent;
+
+              svg {
+                color: $white;
+
+                width: 16px;
+                height: 16px;
+              }
+            }
+          }
+
+          .backpackItemRemove {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            height: 2.6875rem;
+            width: 2.6875rem;
+
+            background: $primary;
+            border: 0;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+
+    .total {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin: 0 1.2813rem;
+      
+      strong {
+        font-size: $font-size-2xl;
+        font-weight: 700;
+      }
+    }
+  }
+}
