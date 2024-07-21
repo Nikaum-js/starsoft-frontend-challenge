@@ -1,40 +1,136 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Starsoft Frontend Challenge
 
-## Getting Started
+Este repositório contém o código para o desafio de frontend da Starsoft. A aplicação é construída utilizando Next.js e Yarn como gerenciador de pacotes. Este guia fornece instruções sobre como configurar, rodar e fazer o deploy do projeto.
 
-First, run the development server:
+## Índice
+
+- [Pré-requisitos](#pré-requisitos)
+- [Instalação](#instalação)
+- [Scripts Disponíveis](#scripts-disponíveis)
+- [Docker](#docker)
+- [Deploy](#deploy)
+
+## Pré-requisitos
+
+Certifique-se de ter os seguintes softwares instalados em sua máquina:
+
+- Node.js (versão 18.x ou superior)
+- Yarn (versão 1.x ou superior)
+
+## Instalação
+
+1. **Clone o repositório:**
+
+   ```bash
+   git https://github.com/Nikaum-js/starsoft-frontend-challenge
+   cd starsoft-frontend-challenge
+   ```
+
+2. **Instale as dependências:**
+
+   ```bash
+   yarn install
+   ```
+
+## Scripts Disponíveis
+
+No diretório do projeto, você pode executar os seguintes comandos:
+
+### `yarn dev`
+
+Executa a aplicação em modo de desenvolvimento.
+Abra [http://localhost:3000](http://localhost:3000) para ver no navegador.
+
+A página será recarregada se você fizer edições.
+Você também verá erros de lint no console.
 
 ```bash
-npm run dev
-# or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### `yarn build`
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Constrói a aplicação para produção na pasta \`.next\`.
+A aplicação está pronta para ser implantada!
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```bash
+yarn build
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### `yarn start`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Inicia o servidor em modo de produção.
+Certifique-se de que você executou \`yarn build\` primeiro.
 
-## Learn More
+```bash
+yarn start
+```
 
-To learn more about Next.js, take a look at the following resources:
+### `yarn lint`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Executa o linter para verificar o código em busca de problemas de formatação e estilo.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+yarn lint
+```
 
-## Deploy on Vercel
+## Docker
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Também é possível rodar a aplicação utilizando Docker. Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Passos para rodar com Docker
+
+1. **Construa a imagem Docker:**
+
+   ```bash
+   docker-compose up --build
+   ```
+
+2. **Acesse a aplicação:**
+
+   Abra [http://localhost:3001](http://localhost:3001) para ver no navegador.
+
+## Deploy
+
+Para fazer o deploy da aplicação, siga as instruções no arquivo [DEPLOY.md](./DEPLOY.md).
+
+### Deploy com Vercel
+
+#### Passos para Deploy
+
+1. **Instale a CLI do Vercel:**
+   ```bash
+   yarn global add vercel
+   ```
+
+2. **Adicione o diretório global do Yarn ao PATH:**
+   - Encontre o diretório global do Yarn:
+     ```bash
+     yarn global bin
+     ```
+   - Adicione o diretório ao PATH:
+     ```bash
+     export PATH="\$(yarn global bin):\$PATH"
+     ```
+   - Recarregue o arquivo de configuração do shell:
+     ```bash
+     source ~/.zshrc  # Para zsh
+     # ou
+     source ~/.bashrc  # Para bash
+     ```
+
+3. **Faça login no Vercel:**
+   ```bash
+   vercel login
+   ```
+
+4. **Deploy da aplicação:**
+   No diretório do seu projeto, execute:
+   ```bash
+   vercel
+   ```
+
+5. **Configuração de Variáveis de Ambiente:**
+   - Vá para o painel do Vercel.
+   - Selecione o seu projeto.
+   - Vá em **Settings** > **Environment Variables** e adicione suas variáveis.
