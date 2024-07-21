@@ -4,7 +4,7 @@ export interface Product {
   description: string;
   image: string;
   price: number;
-  createdAt: string;
+  createdAt?: string;
 }
 
 export interface ProductsResponse {

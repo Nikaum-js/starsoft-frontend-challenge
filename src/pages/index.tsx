@@ -20,7 +20,7 @@ export default function Home({ initialProducts, initialDataUpdatedAt }: InferGet
   const [totalProducts, setTotalProducts] = useState(0);
   const [loadingMore, setLoadingMore] = useState(false);
 
-  const { data: productsData, isLoading, error } = useProducts(page, initialLimit, initialProducts, initialDataUpdatedAt);
+  const { data: productsData, isLoading } = useProducts(page, initialLimit, initialProducts, initialDataUpdatedAt);
 
   useEffect(() => {
     if (!productsData) return;

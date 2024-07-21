@@ -1,17 +1,24 @@
 import Image from "next/image";
-
+import { useAppDispatch } from "@/store";
 import styles from './Product.module.scss';
 import { Button } from "../Button";
+import { addItemToBackpack } from "@/store/slices/backpackSlice";
 
 interface ProductProps {
-  id: number
-  image: string
-  name: string
-  description: string
-  price: number
+  id: number;
+  image: string;
+  name: string;
+  description: string;
+  price: number;
 }
 
-export function Product({ image, description, price, name }: ProductProps) {
+export function Product({ id, image, description, price, name }: ProductProps) {
+  const dispatch = useAppDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(addItemToBackpack({ id, image, description, price, name }));
+  };
+
   return (
     <div className={styles.product}>
       <div className={styles.containerImage}>
@@ -26,12 +33,11 @@ export function Product({ image, description, price, name }: ProductProps) {
 
         <div className={styles.price}>
           <Image src="/eth.svg" alt="ethereum cryptocurrency logo" width={29} height={29} draggable="false" />
-
           <strong>{price} ETH</strong>
         </div>
       </div>
 
-      <Button>
+      <Button onClick={handleAddToCart}>
         Comprar
       </Button>
     </div>

@@ -1,26 +1,35 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import styles from './ShoppingBackpack.module.scss';
-import { Minus, Plus } from 'lucide-react';
 import { Button } from '@/components/Button';
 import { useRouter } from 'next/router';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '@/store';
 import { ShoppingBackpackItem } from '@/components/ShoppingBackpackItem';
+import { decrementItemQuantity, incrementItemQuantity, removeItemFromBackpack } from '@/store/slices/backpackSlice';
 
 export default function ShoppingBackpack() {
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+  const backpackItems = useSelector((state: RootState) => state.backpack.items);
 
   const handleRedirectToHome = () => {
     router.push('/');
   };
 
-  const handleIncrement = () => {
+  const handleIncrement = (id: number) => {
+    dispatch(incrementItemQuantity(id));
   };
 
-  const handleDecrement = () => {
+  const handleDecrement = (id: number) => {
+    dispatch(decrementItemQuantity(id));
   };
 
-  const handleRemove = () => {
+  const handleRemove = (id: number) => {
+    dispatch(removeItemFromBackpack(id));
   };
+
+  const total = backpackItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   return (
     <div className={styles.container}>
@@ -37,28 +46,30 @@ export default function ShoppingBackpack() {
       </div>
 
       <div className={styles.content}>
-        <ShoppingBackpackItem
-          imageSrc="https://softstar.s3.amazonaws.com/items/backpack.png"
-          name="ITEM 2"
-          description="Redesigned from scratch and completely revised. Redesigned from scratch and completely revised."
-          price={32}
-          quantity={1}
-          onIncrement={handleIncrement}
-          onDecrement={handleDecrement}
-          onRemove={handleRemove}
-        />
+        {backpackItems.map((item) => (
+          <ShoppingBackpackItem
+            key={item.id}
+            imageSrc={item.image}
+            name={item.name}
+            description={item.description}
+            price={item.price}
+            quantity={item.quantity}
+            onIncrement={() => handleIncrement(item.id)}
+            onDecrement={() => handleDecrement(item.id)}
+            onRemove={() => handleRemove(item.id)}
+          />
+        ))}
 
         <div className={styles.total}>
           <strong>TOTAL</strong>
 
           <div className={styles.price}>
-              <Image src="/eth.svg" alt="ethereum cryptocurrency logo" width={29} height={29} draggable="false" />
-
-              <strong>32 ETH</strong>
-            </div>
+            <Image src="/eth.svg" alt="ethereum cryptocurrency logo" width={29} height={29} draggable="false" />
+            <strong>{total} ETH</strong>
+          </div>
         </div>
 
-        <Button>
+        <Button id={styles.checkoutButton}>
           FINALIZAR COMPRA
         </Button>
       </div>
