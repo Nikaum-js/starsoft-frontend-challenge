@@ -9,12 +9,12 @@ interface ShoppingCartProps {
 export function ShoppingCart({ itemsInCart }: ShoppingCartProps) {
   const router = useRouter();
 
-  const handleRedirectShoppingBackpack = () => {
+  const handleRedirectToShoppingBackpack = () => {
     router.push('/shopping-backpack');
   };
 
   return (
-    <button className={styles.shoppingCart} onClick={handleRedirectShoppingBackpack}>
+    <button className={styles.shoppingCart} onClick={handleRedirectToShoppingBackpack}>
       <Image src="/bar.svg" alt="shopping cart icon" width={33} height={33} />
       <p>{itemsInCart}</p>
     </button>
