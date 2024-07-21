@@ -1,8 +1,10 @@
-import Image from "next/image";
-import { useAppDispatch } from "@/store";
+import Image from 'next/image';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useAppDispatch } from '@/store';
 import styles from './Product.module.scss';
-import { Button } from "../Button";
-import { addItemToBackpack } from "@/store/slices/backpackSlice";
+import { Button } from '../Button';
+import { addItemToBackpack } from '@/store/slices/backpackSlice';
 
 interface ProductProps {
   id: number;
@@ -14,13 +16,21 @@ interface ProductProps {
 
 export function Product({ id, image, description, price, name }: ProductProps) {
   const dispatch = useAppDispatch();
+  const [isAdded, setIsAdded] = useState(false);
 
   const handleAddToCart = () => {
     dispatch(addItemToBackpack({ id, image, description, price, name }));
+    setIsAdded(true);
+    setTimeout(() => setIsAdded(false), 1000);
   };
 
   return (
-    <div className={styles.product}>
+    <motion.div
+      className={styles.product}
+      initial={{ scale: 1 }}
+      animate={isAdded ? { scale: 1.01 } : { scale: 1 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+    >
       <div className={styles.containerImage}>
         <Image src={image} alt={name} width={296} height={258} priority draggable="false" />
       </div>
@@ -40,6 +50,6 @@ export function Product({ id, image, description, price, name }: ProductProps) {
       <Button onClick={handleAddToCart}>
         Comprar
       </Button>
-    </div>
+    </motion.div>
   );
 }

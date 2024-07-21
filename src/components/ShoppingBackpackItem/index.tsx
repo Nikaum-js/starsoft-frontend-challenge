@@ -30,7 +30,7 @@ export function ShoppingBackpackItem({
       initial={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.5 } }}
     >
-      <Image src={imageSrc} alt={name} width={161} height={161} />
+      <Image className={styles.productImage} src={imageSrc} alt={name} width={161} height={161} />
 
       <div className={styles.backpackItemInfos}>
         <h3>{name}</h3>

@@ -5,27 +5,25 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding: 0 1rem;
 
   .header {
     display: flex;
     align-items: center;
-
-    min-width: 45rem;
+    width: 100%;
+    max-width: 45rem;
     margin-top: 4.625rem;
 
     button {
       display: flex;
       align-items: center;
       justify-content: center;
-      
       height: 3.75rem;
       width: 3.75rem;
-
       background: $gray-300;
       border: 0;
       border-radius: 50%;
-
-      margin-right: 5.25rem;
+      margin-right: 1rem;
     }
 
     h2 {
@@ -37,15 +35,14 @@
   .content {
     display: flex;
     flex-direction: column;
-    
-    min-width: 45rem;
+    width: 100%;
+    max-width: 45rem;
     margin-top: 96px;
     gap: 27px;
 
     .price {
       display: flex;
       align-items: center;
-
       margin: 8px 0;
 
       img {
@@ -64,7 +61,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       margin: 0 1.2813rem;
       
       strong {
@@ -75,6 +71,23 @@
 
     #checkoutButton {
       margin-bottom: 7.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .content {
+      margin-top: 32px;
+    }
+
+    .header {
+      button {
+        height: 3rem;
+        width: 3rem;
+      }
+
+      h2 {
+        font-size: $font-size-xl;
+      }
     }
   }
 }

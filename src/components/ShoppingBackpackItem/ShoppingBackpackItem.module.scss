@@ -7,7 +7,7 @@
   border-radius: 8px;
   padding: 1.2188rem 1.875rem;
 
-  img {
+  .productImage {
     border-radius: 8px;
   }
 
@@ -31,7 +31,7 @@
       line-height: 0.9375rem;
       font-weight: 300;
       color: $gray-200;
-      width: 440px;
+      width: 100%;
     }
 
     .price {
@@ -100,6 +100,16 @@
         border: 0;
         border-radius: 50%;
       }
+    }
+  }
+
+  @media (max-width: 520px) {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .productImage {
+      width: 180px;
     }
   }
 }
